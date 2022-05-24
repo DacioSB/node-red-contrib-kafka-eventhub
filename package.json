@@ -1,0 +1,26 @@
+{
+  "name": "streamplugin",
+  "version": "1.0.0",
+  "description": "A plugin that either works with eventhub and kafka",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && cpy --parents --cwd=src *.{js,html} icons/ ../dist"
+  },
+  "author": "Dacio Bezerra",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.18.18",
+    "@types/node-red": "^1.2.0",
+    "cpy-cli": "^3.1.1",
+    "typescript": "^4.2.2"
+  },
+  "dependencies": {
+    "cockatiel": "^2.0.2",
+    "node-red": "^2.2.2"
+  },
+  "node-red": {
+    "nodes": {
+      "capitalizer": "dist/capitalize-all-first-letters.js"
+    }
+  }
+}
