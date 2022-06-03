@@ -16,11 +16,15 @@
   },
   "dependencies": {
     "cockatiel": "^2.0.2",
+    "kafkajs": "^2.0.2",
     "node-red": "^2.2.2"
   },
   "node-red": {
     "nodes": {
       "capitalizer": "dist/capitalize-all-first-letters.js"
     }
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
