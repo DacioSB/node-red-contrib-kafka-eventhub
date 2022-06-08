@@ -18,8 +18,6 @@ interface KafkaConnectorNode extends Node {
 const KafkaConnector: NodeInitializer = function (RED) {
   function KafkaConnectorConstructor(this: KafkaConnectorNode, config: KafkaConnectorNodeDef) {
     RED.nodes.createNode(this, config);
-    console.log("CHEGUEEEEI");
-    console.log(this);
     let node = this;
     const retry: RetryOptions = {
       retries: 5,
@@ -41,6 +39,11 @@ const KafkaConnector: NodeInitializer = function (RED) {
       opt.sasl = sasl;
     }
     node.options = opt;
+
+    node.on("close", function (done: any) {
+      node.log("Closing connection");
+      done();
+    });
   }
   RED.nodes.registerType("kafka-connector", KafkaConnectorConstructor);
 };

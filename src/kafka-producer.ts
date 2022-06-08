@@ -97,17 +97,21 @@ const KafkaProducer: NodeInitializer = function (RED) {
             typeof message.payload === "number" || typeof message.payload === "boolean" ? message.payload.toString() : message.payload
           ) as string;
           msgConverted = typeof message.payload === "string" ? message.payload : JSON.stringify(message.payload);
-
           let event: Message = {
             key: config.key || null,
             value: msgConverted,
             partition: config.partition || null,
           };
           node.eventOptions.messages.push(event);
-          node.producer.send(node.eventOptions).catch((err) => {
-            node.error("An error occurred while trying to send event to kafka cluster", err);
-            node.status({ fill: "red", shape: "dot", text: "Error" });
-          });
+          node.producer
+            .send(node.eventOptions)
+            .then(() => {
+              node.log(`Message sent to topic ${node.eventOptions.topic}`);
+              node.eventOptions.messages.pop()})
+            .catch((err) => {
+              node.error("An error occurred while trying to send event to kafka cluster", err);
+              node.status({ fill: "red", shape: "dot", text: "Error" });
+            });
 
           node.lastMessage = new Date().getTime();
           node.status({ fill: "green", shape: "dot", text: "Sending" });
