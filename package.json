@@ -21,7 +21,8 @@
   },
   "node-red": {
     "nodes": {
-      "capitalizer": "dist/capitalize-all-first-letters.js"
+      "kafka-connector": "dist/kafka-connector.js",
+      "kafka-producer": "dist/kafka-producer.js"
     }
   },
   "files": [

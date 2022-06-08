@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    RED.nodes.registerType('kafka-producer',{
+    	category: 'kafka',
+        color: "#008AD7",
+        defaults: {
+            name: {value:"",required:false},
+            client: {type:"kafka-connector"},
+            topic: {value:"",required:false},
+            ack: {value: "all", require:false},
+            partition: {value: null, required:false},
+            key: {value: null, required:false},
+            topicautocreation: {value: false, require:false}
+        },
+	    inputs:1,
+        inputLabels: "",
+        outputs:0,
+        outputLabels: [],
+        icon: "text.png",
+        allign: "right",
+        label: function() {
+            return this.name||this._("kafka-producer");
+        },
+        labelStyle: function() {
+            return "node_label_italic";
+        },
+        oneditprepare: function() {
+            
+        },
+        oneditsave: function() {
+            
+        },
+        oneditresize: function(size) {
+
+        }
+});
+</script>
+
+<script type="text/html" data-help-name="kafka-producer">
+    <p>Definition of kafka-producer </p>
+	<p>Usage details can be found under https://github.com/emrebekar/node-red-contrib-kafka/blob/master/README.md</p>
+</script>
+
+<script type="text/html" data-template-name="kafka-producer">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+    	<label for="node-input-client"><i class="fa fa-plug"></i>User</label>
+    	<input id="node-input-client">
+  	</div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-link"></i>Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <div id="node-advancedoptions" class="form-row" style="margin-left:30px">
+        <div class="form-row">
+            <label for="node-input-acknowledge"><i class="fa fa-check-square "></i>Acks</label>
+            <select id="node-input-acknowledge">            
+                <option value="all">ALL</option>
+                <option value="none">NONE</option>
+                <option value="leader">LEADER</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="node-input-key"><i class="fa fa-tag"></i> Key</label>
+            <input id="node-input-key" type="text">
+        </div>
+        <div class="form-row">
+            <label for="node-input-partition"><i class="fa fa-hdd-o"></i> Partition</label>
+            <input id="node-input-partition" type="number">
+        </div>
+    </div>
+
+</script>

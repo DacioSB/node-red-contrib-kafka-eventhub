@@ -1,0 +1,88 @@
+<script type="text/javascript">
+  RED.nodes.registerType("kafka-connector", {
+    category: "config",
+    defaults: {
+      name: { required: false },
+      broker: { value: "", required: true },
+      userId: { value: "", required: true },
+      auth: { value: "none", required: true },
+      ssl: { value: true, required: true },
+      saslMechanism: { value: "plain", required: true },
+      saslusername: { value: "text", required: false },
+      saslpassword: { value: "password", required: false },
+    },
+    icon: "text.png",
+    label: function () {
+      return this.name || "kafka-connector"
+    },
+    oneditsave: function () {
+		},
+    oneditprepare: function () {
+      var node = this
+      var credentials = node.credentials
+
+      function checkAuth(value) {
+        if (value === "sasl") {
+          $("#node-config-sasl").show()
+        } else {
+          $("#node-config-sasl").hide()
+        }
+      }
+
+      checkAuth($("#node-config-input-auth").val())
+      $("#node-config-input-auth").change(function () {
+        checkAuth($(this).val())
+      })
+    },
+  })
+</script>
+
+<script type="text/html" data-help-name="kafka-connector">
+    <p>Definition of kafka-connector </p>
+	<p>Usage details can be found under https://github.com/emrebekar/node-red-contrib-kafkajs/blob/master/README.md</p>
+</script>
+
+<script type="text/html" data-template-name="kafka-connector">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i>Name</label>
+        <input id="node-config-input-name" type="text" placeholder="Name">
+	</div>
+    <div class="form-row">
+        <label for="node-config-input-broker"><i class="fa fa-server"></i>Broker</label>
+        <input id="node-config-input-broker" type="text" placeholder="example.com:9092" >
+	</div>
+    <div class="form-row">
+        <label for="node-config-input-userId"><i class="fa fa-id-card-o"></i>User ID</label>
+        <input id="node-config-input-userId" type="text" placeholder="User ID" >
+	</div>
+    <div class="form-row">
+        <label for="node-config-input-auth"><i class="fa fa-file-text-o"></i>Auth</label>
+        <select id="node-config-input-auth">            
+			<option value="none">NONE</option>
+			<option value="sasl">SASL</option>
+		</select>
+	</div>
+    <div id="node-config-sasl" class="form-row" style="margin-left:30px">
+		<div class="form-row">
+			<label for="node-config-input-saslMechanism"><i class="fa fa-lock"></i> Mechanism</label>
+			<select id="node-config-input-saslMechanism">            
+				<option value="plain">PLAIN</option>
+				<option value="scram-sha-256">SCRAM-SHA-256</option>
+				<option value="scram-sha-512">SCRAM-SHA-512</option>
+			</select>
+		</div>
+		<div class="form-row">
+			<label for="node-config-input-saslusername"><i class="fa fa-id-card-o"></i>Username</label>
+			<input  id="node-config-input-saslusername" type="text" placeholder="Username" >
+		</div>
+		<div class="form-row">
+			<label for="node-config-input-saslpassword"><i class="fa fa-key"></i>Password</label>
+			<input  id="node-config-input-saslpassword" type="password" placeholder="Password" >
+		</div>
+		<div class="form-row">
+			<input type="checkbox" id="node-config-input-saslssl" style="display: inline-block; width: auto; vertical-align: top;">
+			<label for="node-config-input-saslssl" style="width: auto">Use SSL</label>
+		</div>
+	</div>
+</script>
+

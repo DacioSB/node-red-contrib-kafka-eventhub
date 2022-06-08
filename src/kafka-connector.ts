@@ -1,55 +1,48 @@
-import { NodeDef, NodeInitializer } from "node-red"
+import { KafkaConfig, RetryOptions, SASLOptions } from "kafkajs";
+import { NodeDef, NodeInitializer, Node } from "node-red";
 
-interface KafkaConnectorNode extends NodeDef {
-  broker: string
-  userId: string
-  auth: "none" | "sasl"
-  ssl: boolean
-  saslMechanism: "plain" | "scram-sha-256" | "scram-sha-512"
-  userName: string
-  password: string
+interface KafkaConnectorNodeDef extends NodeDef {
+  broker: string;
+  userId: string;
+  auth: "none" | "sasl";
+  ssl: boolean;
+  saslMechanism: "plain" | "scram-sha-256" | "scram-sha-512";
+  saslusername?: string;
+  saslpassword?: string;
 }
 
-interface Options {
-  broker: string
-  userId: string
-  sasl?: SASL
-  ssl: boolean
-  retry: number
-}
-
-interface SASL {
-  mechanism: "plain" | "scram-sha-256" | "scram-sha-512"
-  username: string
-  password: string
+interface KafkaConnectorNode extends Node {
+  options: KafkaConfig;
 }
 
 const KafkaConnector: NodeInitializer = function (RED) {
-  function KafkaConnectorConstructor(config: KafkaConnectorNode) {
-    RED.nodes.createNode(this, config)
-    let opt: Options = {
-      broker: config.broker,
-      userId: config.userId,
-      retry: 5,
-      ssl: config.auth === "sasl" ? config.ssl : false,
-    }
+  function KafkaConnectorConstructor(this: KafkaConnectorNode, config: KafkaConnectorNodeDef) {
+    RED.nodes.createNode(this, config);
+    console.log("CHEGUEEEEI");
+    console.log(this);
+    let node = this;
+    const retry: RetryOptions = {
+      retries: 5,
+    };
+
+    let opt: KafkaConfig = {
+      brokers: [config.broker],
+      clientId: config.userId,
+      retry,
+      ssl: config.ssl || false,
+    };
 
     if (config.auth === "sasl") {
-      const sasl: SASL = {
+      const sasl: SASLOptions = {
         mechanism: config.saslMechanism || "plain",
-        username: config.userName,
-        password: config.password,
-      }
-      opt.sasl = sasl
+        username: config.saslusername,
+        password: config.saslpassword,
+      };
+      opt.sasl = sasl;
     }
-    this.options = opt
+    node.options = opt;
   }
-  RED.nodes.registerType("kafka-connector", KafkaConnectorConstructor, {
-    credentials: {
-      saslusername: { type: "text" },
-      saslpassword: { type: "password" },
-    },
-  })
-}
+  RED.nodes.registerType("kafka-connector", KafkaConnectorConstructor);
+};
 
 export = KafkaConnector;
