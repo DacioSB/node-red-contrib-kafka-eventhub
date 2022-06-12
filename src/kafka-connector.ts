@@ -7,12 +7,14 @@ interface KafkaConnectorNodeDef extends NodeDef {
   auth: "none" | "sasl";
   ssl: boolean;
   saslMechanism: "plain" | "scram-sha-256" | "scram-sha-512";
-  saslusername?: string;
-  saslpassword?: string;
 }
 
 interface KafkaConnectorNode extends Node {
   options: KafkaConfig;
+  credentials: {
+    saslusername: string;
+    saslpassword: string;
+  };
 }
 
 const KafkaConnector: NodeInitializer = function (RED) {
@@ -33,8 +35,8 @@ const KafkaConnector: NodeInitializer = function (RED) {
     if (config.auth === "sasl") {
       const sasl: SASLOptions = {
         mechanism: config.saslMechanism || "plain",
-        username: config.saslusername,
-        password: config.saslpassword,
+        username: node.credentials.saslusername,
+        password: node.credentials.saslpassword,
       };
       opt.sasl = sasl;
     }
@@ -45,7 +47,12 @@ const KafkaConnector: NodeInitializer = function (RED) {
       done();
     });
   }
-  RED.nodes.registerType("kafka-connector", KafkaConnectorConstructor);
+  RED.nodes.registerType("kafka-connector", KafkaConnectorConstructor, {
+    credentials: {
+      saslusername: { type: "text" },
+      saslpassword: { type: "password" },
+    }
+  });
 };
 
 export = KafkaConnector;

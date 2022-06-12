@@ -1,0 +1,65 @@
+<script type="text/html" data-help-name="kafka-consumer">
+    <p>Definition of kafka-consumer </p>
+	<p>Usage details can be found under https://github.com/emrebekar/node-red-contrib-kafkajs/blob/master/README.md</p>
+</script>
+
+<script type="text/html" data-template-name="kafka-consumer">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-folder-open-o"></i>Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <div class="form-row">
+    	<label for="node-input-connection"><i class="fa fa-cogs"></i> Connection</label>
+    	<input type="text" id="node-input-connection">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-users"></i>Consumer Group</label>
+        <input type="text" id="node-input-consumergroup" placeholder="Consumer Group">
+    </div>
+    <div class="form-row">
+        <label for="node-input-clearoffsets"><i class="fa fa-eraser"></i> Clear Offsets</label>
+        <input type="checkbox" id="node-input-clearoffsets">
+    </div>
+    <div class="form-row">
+        <label for="node-input-frombeginning"><i class="fa fa-fast-backward"></i> From Beginning</label>
+        <input type="checkbox" id="node-input-frombeginning">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('kafka-consumer',{
+        category: 'kafka',
+        color: "#008AD7",
+        defaults: {
+            name: {value:""},
+            topic: {value: "", required:true},
+            connection: {type:"kafka-connector"},
+            consumergroup: {value: "", require:false},
+            frombeginning: {value: false, required:true},
+            clearoffsets: {value: false, required:true}
+        },
+        inputs:0,
+        outputs:1,
+        align: "left",
+        icon: "text.png",
+        label: function() {
+            return this.name||this._("kafka-consumer");
+        },
+        labelStyle: function() {
+            return "node_label_italic";
+        },
+        oneditprepare: function() {
+            
+        },
+        oneditsave: function() {
+
+        },
+        oneditresize: function(size) {
+
+        }
+    });
+</script>

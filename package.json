@@ -17,12 +17,14 @@
   "dependencies": {
     "cockatiel": "^2.0.2",
     "kafkajs": "^2.0.2",
-    "node-red": "^2.2.2"
+    "node-red": "^2.2.2",
+    "uuid": "^8.3.2"
   },
   "node-red": {
     "nodes": {
       "kafka-connector": "dist/kafka-connector.js",
-      "kafka-producer": "dist/kafka-producer.js"
+      "kafka-producer": "dist/kafka-producer.js",
+      "kafka-consumer": "dist/kafka-consumer.js"
     }
   },
   "files": [

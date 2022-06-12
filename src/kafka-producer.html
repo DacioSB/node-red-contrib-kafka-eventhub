@@ -5,7 +5,7 @@
         defaults: {
             name: {value:"",required:false},
             client: {type:"kafka-connector"},
-            topic: {value:"",required:false},
+            topic: {value:"",required:true},
             ack: {value: "all", require:false},
             partition: {value: null, required:false},
             key: {value: null, required:false},
@@ -46,16 +46,16 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-    	<label for="node-input-client"><i class="fa fa-plug"></i>User</label>
+    	<label for="node-input-client"><i class="fa fa-cogs"></i>Connection</label>
     	<input id="node-input-client">
   	</div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-link"></i>Topic</label>
+        <label for="node-input-topic"><i class="fa fa-folder-open-o"></i>Topic</label>
         <input type="text" id="node-input-topic" placeholder="Topic">
     </div>
     <div id="node-advancedoptions" class="form-row" style="margin-left:30px">
         <div class="form-row">
-            <label for="node-input-acknowledge"><i class="fa fa-check-square "></i>Acks</label>
+            <label for="node-input-acknowledge"><i class="fa fa-check-square"></i>Acks</label>
             <select id="node-input-acknowledge">            
                 <option value="all">ALL</option>
                 <option value="none">NONE</option>
@@ -67,7 +67,7 @@
             <input id="node-input-key" type="text">
         </div>
         <div class="form-row">
-            <label for="node-input-partition"><i class="fa fa-hdd-o"></i> Partition</label>
+            <label for="node-input-partition"><i class="fa fa-inbox"></i> Partition</label>
             <input id="node-input-partition" type="number">
         </div>
     </div>

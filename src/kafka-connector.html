@@ -8,9 +8,11 @@
       auth: { value: "none", required: true },
       ssl: { value: true, required: true },
       saslMechanism: { value: "plain", required: true },
-      saslusername: { value: "text", required: false },
-      saslpassword: { value: "password", required: false },
     },
+    credentials: {
+			saslusername: { type: "text", required: false },
+			saslpassword: { type: "password", required: false }
+		},
     icon: "text.png",
     label: function () {
       return this.name || "kafka-connector"
@@ -52,11 +54,11 @@
         <input id="node-config-input-broker" type="text" placeholder="example.com:9092" >
 	</div>
     <div class="form-row">
-        <label for="node-config-input-userId"><i class="fa fa-id-card-o"></i>User ID</label>
+        <label for="node-config-input-userId"><i class="fa fa-address-card"></i>User ID</label>
         <input id="node-config-input-userId" type="text" placeholder="User ID" >
 	</div>
     <div class="form-row">
-        <label for="node-config-input-auth"><i class="fa fa-file-text-o"></i>Auth</label>
+        <label for="node-config-input-auth"><i class="fa fa-user-plus"></i>Auth</label>
         <select id="node-config-input-auth">            
 			<option value="none">NONE</option>
 			<option value="sasl">SASL</option>
