@@ -32,8 +32,8 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('kafka-consumer',{
-        category: 'kafka',
-        color: "#008AD7",
+        category: 'streaming',
+        color: "#00D9C0",
         defaults: {
             name: {value:""},
             topic: {value: "", required:true},
@@ -45,7 +45,7 @@
         inputs:0,
         outputs:1,
         align: "left",
-        icon: "text.png",
+        icon: "kafka.png",
         label: function() {
             return this.name||this._("kafka-consumer");
         },

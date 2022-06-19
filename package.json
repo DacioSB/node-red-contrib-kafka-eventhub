@@ -15,6 +15,9 @@
     "typescript": "^4.2.2"
   },
   "dependencies": {
+    "@azure/event-hubs": "^5.8.0",
+    "@azure/eventhubs-checkpointstore-blob": "^1.0.1",
+    "@azure/storage-blob": "^12.10.0",
     "cockatiel": "^2.0.2",
     "kafkajs": "^2.0.2",
     "node-red": "^2.2.2",
@@ -24,7 +27,9 @@
     "nodes": {
       "kafka-connector": "dist/kafka-connector.js",
       "kafka-producer": "dist/kafka-producer.js",
-      "kafka-consumer": "dist/kafka-consumer.js"
+      "kafka-consumer": "dist/kafka-consumer.js",
+      "eventhubs-producer": "dist/eventhubs-producer.js",
+      "eventhubs-consumer": "dist/eventhubs-consumer.js"
     }
   },
   "files": [

@@ -1,0 +1,91 @@
+<script type="text/javascript">
+  RED.nodes.registerType("eventhubs-consumer", {
+    category: "streaming",
+    color: "#FF4365",
+    defaults: {
+      name: { value: "", required: false },
+      connectionString: { value: "", required: true },
+      eventHubName: { value: "", required: true },
+      consumerGroup: { value: "$Default", required: true },
+      storageAccountCommitOffset: { value: "", required: false },
+      containerCommitOffset: { value: "", required: false },
+    },
+    inputs: 0,
+    outputs: 1,
+    icon: "event-hubs.png",
+    label: function () {
+      return this.name || "eventhubs-consumer";
+    },
+  });
+</script>
+
+<style>
+  #node-input-commitOffsetIsEnabled {
+    width: fit-content;
+  }
+</style>
+
+<script type="text/html" data-template-name="eventhubs-consumer">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name </label>
+    <input type="text" id="node-input-name" placeholder="Name" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-eventHubName"><i class="icon-tag"></i> Event Hub Name </label>
+    <input type="text" id="node-input-eventHubName" placeholder="E.g. topic" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-connectionString"><i class="icon-tag"></i> Connection String </label>
+    <input
+      type="text"
+      id="node-input-connectionString"
+      placeholder="E.g. Endpoint=sb://XXX.servicebus.windows.net/;SharedAccessKeyName=XXX;SharedAccessKey=XXX"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-consumerGroup"><i class="icon-tag"></i> Consumer Group </label>
+    <input type="text" id="node-input-consumerGroup" placeholder="E.g. $Default" />
+  </div>
+  
+  <div class="form-row">
+    <label for="node-input-storageAccountCommitOffset"><i class="icon-tag"></i> Storage Account Connection String </label>
+    <input
+      type="text"
+      id="node-input-storageAccountCommitOffset"
+      placeholder="E.g. DefaultEndpointsProtocol=https;AccountName=XXXX;AccountKey=XXXXXXXXXXXXXXX;EndpointSuffix=core.windows.net"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-containerCommitOffset"><i class="icon-tag"></i> Container Name </label>
+    <input type="text" id="node-input-containerCommitOffset" placeholder="E.g. Some Container name" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="eventhubs-consumer">
+  <p>A consumer node from an Azure Event Hub</p>
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+      There are no inputs.
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+      <li>Standard output
+          <dl class="message-properties">
+              <dt>payload <span class="property-type">object</span></dt>
+              <dd>A JSON object, received from the Event Hub.</dd>
+          </dl>
+      </li>
+  </ol>
+
+  <h3>Details</h3>
+  In the node's properties, the connection string, consumer group and event hub name of the Event Hub to which
+  you would like to connect, needs to be specified. These values can be retrieved from
+  the Azure Portal.
+
+  <h3>References</h3>
+  <ul>
+      <li><a href="https://azure.microsoft.com/en-us/services/event-hubs/">Azure Event Hubs</a></li>
+      <li><a https://www.npmjs.com/package/@azure/event-hubs> Azure Event Hubs npm package </a> - the client library used by this node</li>
+  </ul>
+</script>

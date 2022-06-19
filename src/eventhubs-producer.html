@@ -1,0 +1,75 @@
+<script type="text/javascript">
+  RED.nodes.registerType("eventhubs-producer", {
+    category: "streaming",
+    color: "#FF4365",
+    outputs: 0,
+    inputs: 1,
+    defaults: {
+      connectionString: { value: "", required: true },
+      eventHubName: { value: "", required: true },
+      name: { value: "", required: false },
+      partitionKey: { value: null, required: false },
+      retries: { value: 3, required: false },
+    },
+    icon: "event-hubs.png",
+    label: function () {
+      return this.name || "eventhubs-producer";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="eventhubs-producer">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Name </label>
+    <input type="text" id="node-input-name" placeholder="Name" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-connectionString"><i class="icon-tag"></i> Connection String </label>
+    <input
+      type="text"
+      id="node-input-connectionString"
+      placeholder="E.g. Endpoint=sb://XXX.servicebus.windows.net/;SharedAccessKeyName=XXX;SharedAccessKey=XXX"
+    />
+  </div>
+  <div class="form-row">
+    <label for="node-input-eventHubName"><i class="icon-tag"></i> Event Hub Name </label>
+    <input type="text" id="node-input-eventHubName" placeholder="EventHub Name" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-retries"><i class="icon-tag"></i> Retries </label>
+    <input type="number" id="node-input-retries" placeholder="3" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-partitionKey"><i class="icon-tag"></i> Partition Key </label>
+    <input type="text" id="node-input-partitionKey" placeholder="Some Partition" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="eventhubs-producer">
+  <p>A producer node from an Azure Event Hub</p>
+  <h3>Inputs</h3>
+  <ol class="node-ports">
+    <li>Standard input
+        <dl class="message-properties">
+            <dt>payload <span class="property-type">object</span></dt>
+            <dd>A JSON object, to be sent to the Event Hub.</dd>
+        </dl>
+    </li>
+  </ol>
+
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    There are no outputs.
+  </dl>
+
+  <h3>Details</h3>
+  In the node's properties, the connection string and event hub name of the Event Hub to which
+  you would like to connect, needs to be specified. These values can be retrieved from the Azure Portal.
+
+  <h3>References</h3>
+  <ul>
+      <li><a href="https://azure.microsoft.com/en-us/services/event-hubs/">Azure Event Hubs</a></li>
+      <li><a https://github.com/azure/azure-event-hubs-node>Azure Event Hubs NodeJS client (in preview)</a> - the client library used by this node</li>
+  </ul>
+</script>

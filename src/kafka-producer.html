@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('kafka-producer',{
-    	category: 'kafka',
-        color: "#008AD7",
+    	category: 'streaming',
+        color: "#00D9C0",
         defaults: {
             name: {value:"",required:false},
             client: {type:"kafka-connector"},
@@ -15,7 +15,7 @@
         inputLabels: "",
         outputs:0,
         outputLabels: [],
-        icon: "text.png",
+        icon: "kafka.png",
         allign: "right",
         label: function() {
             return this.name||this._("kafka-producer");
