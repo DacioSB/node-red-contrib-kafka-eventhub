@@ -97,12 +97,12 @@ const KafkaConsumer: NodeInitializer = function (RED) {
           payload: message,
         };
         payload.payload.key = message.key ? message.key.toString() : null;
-        payload.payload.value = message.value.toString();
+        //payload.payload.value = message.value.toString();
         //node.consumer.on(node.consumer.events.CONNECT, )
         for (const [key, value] of Object.entries(payload.payload.headers)) {
           payload.payload.headers[key] = value.toString();
         }
-
+        //payload.payload.value = JSON.parse(payload.payload.value);
         node.send(payload);
         node.status({ fill: "green", shape: "dot", text: "Reading" });
       };

@@ -1,0 +1,918 @@
+[
+    {
+        "id": "c03df90af4e6bfad",
+        "type": "tab",
+        "label": "GET Temperature",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f8f610f5d34ec5a9",
+        "type": "tab",
+        "label": "Main Flow Temperature",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "832450b59ddf8717",
+        "type": "tab",
+        "label": "Main Flow Motion",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8cf3cc8dc9f00149",
+        "type": "tab",
+        "label": "Consumers",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9e110c1f49ae1077",
+        "type": "kafka-connector",
+        "name": "",
+        "broker": "moped-01.srvs.cloudkafka.com:9094",
+        "userId": "myname",
+        "auth": "sasl",
+        "ssl": true,
+        "saslMechanism": "scram-sha-256"
+    },
+    {
+        "id": "2244c5ff6367c3af",
+        "type": "ui_tab",
+        "name": "Streaming Options",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5996486d4e4de6b9",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "8769f2842c177eab",
+        "type": "ui_group",
+        "name": "Choose Stream Platform",
+        "tab": "2244c5ff6367c3af",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ee82860a0bf44a7b",
+        "type": "http in",
+        "z": "c03df90af4e6bfad",
+        "name": "GET temperature",
+        "url": "/temp",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "f504971f0f5b6688"
+            ]
+        ]
+    },
+    {
+        "id": "f504971f0f5b6688",
+        "type": "http request",
+        "z": "c03df90af4e6bfad",
+        "name": "Fetch Temperature",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.weatherapi.com/v1/current.json?key=db3d69c440cf4298bb5180111222205&q=-7.21,-35.90&aqi=no",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 230,
+        "y": 180,
+        "wires": [
+            [
+                "e07a49e7687f60f8"
+            ]
+        ]
+    },
+    {
+        "id": "e07a49e7687f60f8",
+        "type": "function",
+        "z": "c03df90af4e6bfad",
+        "name": "Fetch Only Celsius Temp",
+        "func": "const temp = msg.payload.current.temp_c;\nmsg.payload = {};\nmsg.payload.temp = temp;\nmsg.payload.producer_token = \"l2dM2fTwDHp8ubB5\";\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "8c42ab437564dca7"
+            ]
+        ]
+    },
+    {
+        "id": "8c42ab437564dca7",
+        "type": "http response",
+        "z": "c03df90af4e6bfad",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 630,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "044c30acfd178c82",
+        "type": "inject",
+        "z": "f8f610f5d34ec5a9",
+        "name": "",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 40,
+        "wires": [
+            [
+                "4ad12b6c7180d7c8"
+            ]
+        ]
+    },
+    {
+        "id": "da805f1ccd626ca0",
+        "type": "change",
+        "z": "f8f610f5d34ec5a9",
+        "name": "Set temp to msg.temp",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.temp",
+                "pt": "msg",
+                "to": "temp",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.producer_token",
+                "pt": "msg",
+                "to": "producer_token",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "97f9b50b04804000"
+            ]
+        ]
+    },
+    {
+        "id": "fda725cd28f3a5e0",
+        "type": "function",
+        "z": "f8f610f5d34ec5a9",
+        "name": "",
+        "func": "msg.msg_id = msg.payload;\nmsg.timestamp = Date.now();\nmsg.payload = {};\nmsg.payload.payload = {};\nmsg.payload.payload.temp = msg.temp;\nmsg.payload.msg_id = msg.msg_id;\nmsg.payload.timestamp = msg.timestamp;\nmsg.payload.producer_token = msg.producer_token;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 200,
+        "wires": [
+            [
+                "a79e53086d291aaa"
+            ]
+        ]
+    },
+    {
+        "id": "c99bd7f413a6620b",
+        "type": "comment",
+        "z": "f8f610f5d34ec5a9",
+        "name": "Sensor",
+        "info": "Aqui eu simulo um trigger que ou iria numa base de dados pegar o valor de temperatura atual, ou estaria escutando o bridge do sonoff por lan ou pela cloud por meio do ewelink.",
+        "x": 270,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "97f9b50b04804000",
+        "type": "uuid",
+        "z": "f8f610f5d34ec5a9",
+        "uuidVersion": "v4",
+        "namespaceType": "",
+        "namespace": "",
+        "namespaceCustom": "",
+        "name": "UUID Gen",
+        "field": "payload",
+        "fieldType": "msg",
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "fda725cd28f3a5e0"
+            ]
+        ]
+    },
+    {
+        "id": "4ad12b6c7180d7c8",
+        "type": "http request",
+        "z": "f8f610f5d34ec5a9",
+        "name": "Fetch Temperature",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.weatherapi.com/v1/current.json?key=db3d69c440cf4298bb5180111222205&q=-7.21,-35.90&aqi=no",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "880e2797ec4d8de3"
+            ]
+        ]
+    },
+    {
+        "id": "880e2797ec4d8de3",
+        "type": "function",
+        "z": "f8f610f5d34ec5a9",
+        "name": "Fetch Only Celsius Temp",
+        "func": "const temp = msg.payload.current.temp_c;\nmsg.payload = {};\nmsg.payload.temp = temp;\nmsg.payload.producer_token = \"l2dM2fTwDHp8ubB5\";\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "da805f1ccd626ca0"
+            ]
+        ]
+    },
+    {
+        "id": "a79e53086d291aaa",
+        "type": "switch",
+        "z": "f8f610f5d34ec5a9",
+        "name": "",
+        "property": "streaming_plataform_temp",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "kafka",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "eventhubs",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "53edf27e33a1fb45"
+            ],
+            [
+                "662015f9643560e8"
+            ],
+            [
+                "4a0a318e9665fce3"
+            ]
+        ]
+    },
+    {
+        "id": "662015f9643560e8",
+        "type": "eventhubs-producer",
+        "z": "f8f610f5d34ec5a9",
+        "connectionString": "Endpoint=sb://test1706.servicebus.windows.net/;SharedAccessKeyName=all;SharedAccessKey=5+6Ct2pcS5RkSDedLRtmMcndeiqduH5Yyc+/SD8GAow=;EntityPath=v4ow93vu-temp",
+        "eventHubName": "v4ow93vu-temp",
+        "name": "temp-producer-eh",
+        "partitionKey": "",
+        "retries": 3,
+        "x": 450,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "53edf27e33a1fb45",
+        "type": "kafka-producer",
+        "z": "f8f610f5d34ec5a9",
+        "name": "producer-temp-kafka",
+        "client": "9e110c1f49ae1077",
+        "topic": "v4ow93vu-temp",
+        "ack": "all",
+        "partition": "",
+        "key": "",
+        "topicautocreation": false,
+        "x": 540,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4a0a318e9665fce3",
+        "type": "debug",
+        "z": "f8f610f5d34ec5a9",
+        "name": "Error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "54ed1b58fb81f335",
+        "type": "ui_switch",
+        "z": "f8f610f5d34ec5a9",
+        "name": "",
+        "label": "Temperature",
+        "tooltip": "on to use local kafka, off to use azure eventhubs",
+        "group": "8769f2842c177eab",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "kafka",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "eventhubs",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 110,
+        "y": 440,
+        "wires": [
+            [
+                "733e5c5e5ed9d899"
+            ]
+        ]
+    },
+    {
+        "id": "733e5c5e5ed9d899",
+        "type": "function",
+        "z": "f8f610f5d34ec5a9",
+        "name": "",
+        "func": "global.set(\"streaming_plataform_temp\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 440,
+        "wires": [
+            [
+                "c321a4ef3f1ae49a"
+            ]
+        ]
+    },
+    {
+        "id": "c321a4ef3f1ae49a",
+        "type": "debug",
+        "z": "f8f610f5d34ec5a9",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "84dfb24b7a0809fc",
+        "type": "inject",
+        "z": "832450b59ddf8717",
+        "name": "Inject",
+        "props": [
+            {
+                "p": "producer_token",
+                "v": "hS58fSxn5pIOFr2O",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            [
+                "bc3fdb76b2199c2b"
+            ]
+        ]
+    },
+    {
+        "id": "4486be427c0065b3",
+        "type": "function",
+        "z": "832450b59ddf8717",
+        "name": "isMoving",
+        "func": "function sensor() {\n    const actualHour = new Date().getHours();\n    if (actualHour >= 8 && actualHour <= 12) {\n        return Math.random() < 0.8;\n    } else if (actualHour >= 13 && actualHour <= 17) {\n        return Math.random() < 0.6;\n    } else if (actualHour >= 18 && actualHour <= 20) {\n        return Math.random() < 0.2;\n    } else if (actualHour >= 21 && actualHour <= 23) {\n        return Math.random() < 0.1;\n    }else{\n        return false;\n    }\n}\n\nconst sensorValue = sensor();\nmsg.sensor = new Date().getHours();\n\nmsg.payload = {};\nmsg.payload.payload = {};\nmsg.payload.msg_id = msg.msg_id;\nmsg.payload.payload.motion = sensorValue;\nmsg.payload.timestamp = Date.now();\nmsg.payload.producer_token = msg.producer_token\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 60,
+        "wires": [
+            [
+                "5405bd6ad45b2b68"
+            ]
+        ]
+    },
+    {
+        "id": "bc3fdb76b2199c2b",
+        "type": "uuid",
+        "z": "832450b59ddf8717",
+        "uuidVersion": "v4",
+        "namespaceType": "",
+        "namespace": "",
+        "namespaceCustom": "",
+        "name": "UUID Gen",
+        "field": "msg_id",
+        "fieldType": "msg",
+        "x": 240,
+        "y": 80,
+        "wires": [
+            [
+                "4486be427c0065b3"
+            ]
+        ]
+    },
+    {
+        "id": "5405bd6ad45b2b68",
+        "type": "switch",
+        "z": "832450b59ddf8717",
+        "name": "",
+        "property": "streaming_plataform_motion",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "kafka",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "eventhubs",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "c57e2c2fe9fb6d4e"
+            ],
+            [
+                "174102e68304bd8d"
+            ],
+            [
+                "58a016c8ae8fa286"
+            ]
+        ]
+    },
+    {
+        "id": "c57e2c2fe9fb6d4e",
+        "type": "kafka-producer",
+        "z": "832450b59ddf8717",
+        "name": "producer-motion-kafka",
+        "client": "9e110c1f49ae1077",
+        "topic": "v4ow93vu-motion",
+        "ack": "all",
+        "partition": "",
+        "key": "",
+        "topicautocreation": false,
+        "x": 660,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "174102e68304bd8d",
+        "type": "eventhubs-producer",
+        "z": "832450b59ddf8717",
+        "connectionString": "Endpoint=sb://test1706.servicebus.windows.net/;SharedAccessKeyName=all;SharedAccessKey=S8z9K1R5ZE20M60C/rIsfoRx2bKoO0RGL5ruAY8zgnc=;EntityPath=v4ow93vu-motion",
+        "eventHubName": "v4ow93vu-motion",
+        "name": "producer-motion-eh",
+        "partitionKey": "",
+        "retries": 3,
+        "x": 600,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "58a016c8ae8fa286",
+        "type": "debug",
+        "z": "832450b59ddf8717",
+        "name": "Error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0ff965aef850fcd6",
+        "type": "ui_switch",
+        "z": "832450b59ddf8717",
+        "name": "",
+        "label": "Motion",
+        "tooltip": "on to use local kafka, off to use azure eventhubs",
+        "group": "8769f2842c177eab",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "kafka",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "eventhubs",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 127,
+        "y": 389,
+        "wires": [
+            [
+                "4681dbf49b5abc88"
+            ]
+        ]
+    },
+    {
+        "id": "4681dbf49b5abc88",
+        "type": "function",
+        "z": "832450b59ddf8717",
+        "name": "",
+        "func": "global.set(\"streaming_plataform_motion\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 380,
+        "wires": [
+            [
+                "990ff890c98b9146"
+            ]
+        ]
+    },
+    {
+        "id": "990ff890c98b9146",
+        "type": "debug",
+        "z": "832450b59ddf8717",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "af1921a5bf7e217d",
+        "type": "eventhubs-consumer",
+        "z": "8cf3cc8dc9f00149",
+        "name": "consumer-temp-eh",
+        "connectionString": "Endpoint=sb://test1706.servicebus.windows.net/;SharedAccessKeyName=all;SharedAccessKey=5+6Ct2pcS5RkSDedLRtmMcndeiqduH5Yyc+/SD8GAow=;EntityPath=v4ow93vu-temp",
+        "eventHubName": "v4ow93vu-temp",
+        "consumerGroup": "$Default",
+        "storageAccountCommitOffset": "",
+        "containerCommitOffset": "",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "208291d2f24794f1"
+            ]
+        ]
+    },
+    {
+        "id": "208291d2f24794f1",
+        "type": "debug",
+        "z": "8cf3cc8dc9f00149",
+        "name": "eh-consumer-temp-log",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "ad3c3b94b4fdaa03",
+        "type": "kafka-consumer",
+        "z": "8cf3cc8dc9f00149",
+        "name": "consumer-temp-kafka",
+        "topic": "v4ow93vu-temp",
+        "connection": "9e110c1f49ae1077",
+        "consumergroup": "",
+        "frombeginning": false,
+        "clearoffsets": false,
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "82012c8ba6243ba8"
+            ]
+        ]
+    },
+    {
+        "id": "c85383017b5f6c51",
+        "type": "debug",
+        "z": "8cf3cc8dc9f00149",
+        "name": "kafka-consumer-temp-log",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "09a1245032f419ce",
+        "type": "eventhubs-consumer",
+        "z": "8cf3cc8dc9f00149",
+        "name": "consumer-motion-eh",
+        "connectionString": "Endpoint=sb://test1706.servicebus.windows.net/;SharedAccessKeyName=all;SharedAccessKey=S8z9K1R5ZE20M60C/rIsfoRx2bKoO0RGL5ruAY8zgnc=;EntityPath=v4ow93vu-motion",
+        "eventHubName": "v4ow93vu-motion",
+        "consumerGroup": "$Default",
+        "storageAccountCommitOffset": "",
+        "containerCommitOffset": "",
+        "x": 190,
+        "y": 260,
+        "wires": [
+            [
+                "eb1c82d074f7359c"
+            ]
+        ]
+    },
+    {
+        "id": "eb1c82d074f7359c",
+        "type": "debug",
+        "z": "8cf3cc8dc9f00149",
+        "name": "eh-consumer-motion-log",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4bd16d8195c081b5",
+        "type": "kafka-consumer",
+        "z": "8cf3cc8dc9f00149",
+        "name": "consumer-motion-kafka",
+        "topic": "v4ow93vu-motion",
+        "connection": "9e110c1f49ae1077",
+        "consumergroup": "",
+        "frombeginning": false,
+        "clearoffsets": false,
+        "x": 200,
+        "y": 320,
+        "wires": [
+            [
+                "9ae648ea4c54ba08"
+            ]
+        ]
+    },
+    {
+        "id": "ea78915bdcc7c3f2",
+        "type": "debug",
+        "z": "8cf3cc8dc9f00149",
+        "name": "kafka-consumer-motion-log",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "82012c8ba6243ba8",
+        "type": "function",
+        "z": "8cf3cc8dc9f00149",
+        "name": "",
+        "func": "msg.payload.value = JSON.parse(msg.payload.value);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 160,
+        "wires": [
+            [
+                "c85383017b5f6c51"
+            ]
+        ]
+    },
+    {
+        "id": "9ae648ea4c54ba08",
+        "type": "function",
+        "z": "8cf3cc8dc9f00149",
+        "name": "",
+        "func": "msg.payload.value = JSON.parse(msg.payload.value);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "ea78915bdcc7c3f2"
+            ]
+        ]
+    }
+]

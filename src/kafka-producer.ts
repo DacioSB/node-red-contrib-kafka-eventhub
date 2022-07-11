@@ -102,6 +102,7 @@ const KafkaProducer: NodeInitializer = function (RED) {
             value: msgConverted,
             partition: config.partition || message["partition"] || null,
           };
+          message["topic"] ? node.eventOptions.topic = message["topic"] : null;
           node.eventOptions.messages.push(event);
           node.producer
             .send(node.eventOptions)
