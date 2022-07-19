@@ -6,6 +6,7 @@ Kafka nodes were created based on the kafkajs client and EventHubs nodes were cr
 
 - KafkaJS references: https://kafka.js.org/
 - EventHubs references: https://github.com/Azure/azure-sdk-for-js
+- How to run locally: https://hackmd.io/@b7bzaGLrTZmy3DQcHLICug/S1q45V2s9
 
 ## Installation
 
