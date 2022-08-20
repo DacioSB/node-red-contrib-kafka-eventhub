@@ -1,5 +1,5 @@
 {
-  "name": "streamplugin",
+  "name": "@docitu/node-red-contrib-streamplugin",
   "version": "1.0.0",
   "description": "A plugin that either works with eventhub and kafka",
   "main": "index.js",
@@ -32,6 +32,7 @@
       "eventhubs-consumer": "dist/eventhubs-consumer.js"
     }
   },
+  "keywords": [ "node-red" ],
   "files": [
     "dist"
   ]

@@ -27,6 +27,7 @@ const KafkaProducer: NodeInitializer = function (RED) {
     RED.nodes.createNode(this, config);
     let node = this;
     let configClient = RED.nodes.getNode(config.client) as any;
+    console.log("!!!!!!!!"+JSON.stringify(configClient));
     node.client = new Kafka(configClient.options);
 
     if (!this.client) {
@@ -80,6 +81,7 @@ const KafkaProducer: NodeInitializer = function (RED) {
       if (node.lastMessage != null) {
         const diff = new Date().getTime() - node.lastMessage;
         if (diff > 10000) {
+          //node.eventOptions.messages.pop();
           node.status({ fill: "yellow", shape: "dot", text: "Idle" });
         }
       }
@@ -90,9 +92,6 @@ const KafkaProducer: NodeInitializer = function (RED) {
     this.on("input", function (message: NodeMessage) {
       if (node.ready) {
         if (message.payload != null) {
-          // TODO: here i can allow to send msg.topic or via node, choice is made by the user
-          // But now, we're ignoring it
-          // the message is json or strin. if is json, convert to string
           let msgConverted: string = (
             typeof message.payload === "number" || typeof message.payload === "boolean" ? message.payload.toString() : message.payload
           ) as string;

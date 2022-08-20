@@ -6,8 +6,13 @@
       broker: { value: "", required: true },
       userId: { value: "", required: true },
       auth: { value: "none", required: true },
-      ssl: { value: true, required: true },
+      ssl: { value: true, required: false },
       saslMechanism: { value: "plain", required: true },
+      tlsselfsigned: { value: false, required: false },
+			tlscacert: { required: false },
+			tlsclientcert: { required: false },
+			tlsprivatekey: { required: false },
+			tlspassphrase: { required: false }
     },
     credentials: {
 			saslusername: { type: "text", required: false },
@@ -25,9 +30,14 @@
 
       function checkAuth(value) {
         if (value === "sasl") {
-          $("#node-config-sasl").show()
-        } else {
-          $("#node-config-sasl").hide()
+          $("#node-config-tls").hide();
+					$("#node-config-sasl").show();
+        } else if (value == "tls") {
+					$("#node-config-sasl").hide();
+					$("#node-config-tls").show();
+				}else {
+          $("#node-config-sasl").hide();
+					$("#node-config-tls").hide();
         }
       }
 
@@ -41,7 +51,7 @@
 
 <script type="text/html" data-help-name="kafka-connector">
     <p>Definition of kafka-connector </p>
-	<p>Usage details can be found under https://github.com/emrebekar/node-red-contrib-kafkajs/blob/master/README.md</p>
+	<p>Usage details can be found under https://github.com/DacioSB/node-red-contrib-kafka-eventhub#readme</p>
 </script>
 
 <script type="text/html" data-template-name="kafka-connector">
@@ -60,10 +70,38 @@
     <div class="form-row">
         <label for="node-config-input-auth"><i class="fa fa-user-plus"></i>Auth</label>
         <select id="node-config-input-auth">            
-			<option value="none">NONE</option>
-			<option value="sasl">SASL</option>
-		</select>
-	</div>
+          <option value="none">NONE</option>
+          <option value="sasl">SASL</option>
+          <option value="tls">TLS</option>
+		    </select>
+	  </div>
+    <div id="node-config-tls" class="form-row" style="margin-left:30px">
+
+      <div class="form-row">
+        <label for="node-config-input-tlscacert"><i class="fa fa-certificate"></i> CA Cert</label>
+        <input  id="node-config-input-tlscacert" type="text" placeholder="/var/..." >
+      </div>
+      
+      <div class="form-row">
+        <label for="node-config-input-tlsclientcert"><i class="fa fa-certificate"></i> Client Cert</label>
+        <input  id="node-config-input-tlsclientcert" type="text" placeholder="/var/..." >
+      </div>
+      
+      <div class="form-row">
+        <label for="node-config-input-tlsprivatekey"><i class="fa fa-tag"></i> Private Key</label>
+        <input  id="node-config-input-tlsprivatekey" type="text" placeholder="/var/..." >
+      </div>
+      
+      <div class="form-row">
+        <label for="node-config-input-tlspassphrase"><i class="fa fa-key"></i> Passphrase</label>
+        <input  id="node-config-input-tlspassphrase" type="password" placeholder="Passphrase" >
+      </div>
+  
+      <div class="form-row">
+        <input type="checkbox" id="node-config-input-tlsselfsigned" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-config-input-tlsselfsigned" style="width: auto">Self Signed</label>
+      </div>
+    </div>
     <div id="node-config-sasl" class="form-row" style="margin-left:30px">
 		<div class="form-row">
 			<label for="node-config-input-saslMechanism"><i class="fa fa-lock"></i> Mechanism</label>
